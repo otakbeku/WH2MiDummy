@@ -42,23 +42,12 @@ public class AdapterDiagnosa extends RecyclerView.Adapter<AdapterDiagnosa.ViewHo
         this.myClickListener = myClickListener;
     }
 
-//    public AdapterDiagnosa(String[] Dataset_diagnosa) {
-//        mDataset = Dataset_diagnosa;
-//    }
-
     public AdapterDiagnosa(ArrayList<ModelObject> dataset) {
         this.dataset = dataset;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //lama
-//        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.textviewtes,parent,false);
-//
-//        ViewHolder vh = new ViewHolder(v);
-//
-//        return vh;
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardviewdiagnosa, parent, false);
 
         ViewHolder vh = new ViewHolder(view);
@@ -67,11 +56,7 @@ public class AdapterDiagnosa extends RecyclerView.Adapter<AdapterDiagnosa.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        lama
-//        Log.v("Err: ",mDataset[position]);
-//        Log.v("posisi: ",Integer.toString(position));
-//
-//        holder.mTextView.setText(mDataset[position]);
+        //bisa untuk ngubah background
         holder.namaPenyakit.setText(dataset.get(position).getNamaPenyakit());
         holder.deksripsiPenyakit.setText(dataset.get(position).getDeksripsiPenyakit());
 

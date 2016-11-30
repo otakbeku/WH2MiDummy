@@ -24,7 +24,7 @@ public class cardViewDiagnosa extends ActionBarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hasildiagnosa);
+        setContentView(R.layout.recyclerdiagnosa);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerDiagnosa);
         recyclerView.setHasFixedSize(true);
@@ -32,7 +32,10 @@ public class cardViewDiagnosa extends ActionBarActivity {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new AdapterDiagnosa(getDataset());
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
+        );
     }
+
 
     @Override
     protected void onResume() {
@@ -41,16 +44,33 @@ public class cardViewDiagnosa extends ActionBarActivity {
             @Override
             public void onItemClick(int position, View v) {
                 Log.i(LOG_TAG, "menekan " + position);
+//    kalo mau nambah intent bisa disini
             }
         });
     }
+    public ArrayList<ModelObject> setArray() {
+        ArrayList result = new ArrayList<ModelObject>();
+        String[] Dataset_diagnosa = new String[]{
+                "kanker1", "kanker2", "kanker3", "kanker4"
+        };
+        String[] Dataset_desk = new String[]{
+                "kanker1: kurang makan", "kanker2: kurang olahraga", "kanker3: kurang kasih sayang", "kanker4: jomblo"
+        };
+
+        for (int i = 0; i < Dataset_desk.length; i++) {
+            ModelObject obj = new ModelObject(Dataset_diagnosa[i], Dataset_desk[i]);
+            result.add(i, obj);
+        }
+        return result;
+    }
 
     private ArrayList<ModelObject> getDataset() {
-        ArrayList result = new ArrayList<ModelObject>();
-        for (int index = 0; index < 20; index++) {
-            ModelObject object = new ModelObject("teks satu " + index, "teks dua " + index);
-            result.add(index, object);
-        }
+        ArrayList result = setArray();
+        //buat nyoba
+//        for (int index = 0; index < 20; index++) {
+//            ModelObject object = new ModelObject("teks satu " + index, "teks dua " + index);
+//            result.add(index, object);
+//        }
         return result;
     }
 }

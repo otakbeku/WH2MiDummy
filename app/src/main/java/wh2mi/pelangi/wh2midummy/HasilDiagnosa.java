@@ -15,7 +15,7 @@ public class HasilDiagnosa extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hasildiagnosa);
+        setContentView(R.layout.recyclerdiagnosa);
 
 //        String[] Dataset_diagnosa = new String[] {
 //                "kanker","kanker","kanker","kanker"
