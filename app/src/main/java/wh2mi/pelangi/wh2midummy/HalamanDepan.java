@@ -25,6 +25,10 @@ public class HalamanDepan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.halamandepan);
 
+
+        //bagian untuk fetching database
+
+
         //RadioGroup dan RadioButton
         rg_jenisKelamin = (RadioGroup) findViewById(R.id.rg_jenisKelamin);
         rbLaki = (RadioButton) findViewById(R.id.rbLaki);

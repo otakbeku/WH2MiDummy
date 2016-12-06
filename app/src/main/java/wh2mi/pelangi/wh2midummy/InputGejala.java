@@ -24,6 +24,19 @@ public class InputGejala extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inputgejala);
 
+        //TAMBAHAN GEJALA
+        Controller controller = new Controller(InputGejala.this);
+        controller.getAllGejala(InputGejala.this);
+        String[] GejalaBaru = controller.getAllGejalaToString();
+
+        boolean cek = false;
+
+        if (GejalaBaru != null) {
+            cek = true;
+        }
+
+        Toast.makeText(getApplicationContext(), "Posisi "+cek, Toast.LENGTH_SHORT).show();
+
         //contoh
         String[] Gejala = new String[]{
                 "Pusing", "muntah", "memar", "gatal", "sakit sendi", "Pusing", "muntah", "memar",
@@ -38,14 +51,14 @@ public class InputGejala extends Activity {
         btn_inputKondisi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i_inputKondisi = new Intent(InputGejala.this,InputKondisiLingkungan.class);
+                Intent i_inputKondisi = new Intent(InputGejala.this, InputKondisiLingkungan.class);
                 startActivity(i_inputKondisi);
             }
         });
 
         //Instansiai listView
         listGejala = (ListView) findViewById(R.id.listGejala);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, Gejala);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, GejalaBaru);
 
         listGejala.setAdapter(adapter);
 

@@ -4,26 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_inputKondisi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTintMode="src_atop"
-        android:text="Input kondisi lingkungan" />
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/btn_inputKondisi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTintMode="src_atop"
+            android:text="Input kondisi lingkungan" />
+
         <ListView
             android:id="@+id/listGejala"
+            android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         </ListView>
-
-
     </LinearLayout>
 </RelativeLayout>
