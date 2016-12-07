@@ -13,6 +13,13 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/btn_cekInputgejala"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTintMode="src_atop"
+            android:text="Cek gejala dipilih" />
+
+        <Button
             android:id="@+id/btn_inputKondisi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

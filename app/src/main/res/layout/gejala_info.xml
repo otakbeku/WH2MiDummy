@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="6dip">
+
+    <CheckBox
+        android:id="@+id/checkboxGejala"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="ini checkbox"
+        android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:id="@+id/namaGejala"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/checkboxGejala"
+        android:layout_alignBottom="@+id/checkboxGejala"
+        android:layout_toRightOf="@+id/checkboxGejala"
+        android:text="ini textview"/>
+
+
+</RelativeLayout>

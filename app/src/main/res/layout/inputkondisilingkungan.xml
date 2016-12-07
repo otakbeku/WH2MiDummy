@@ -4,21 +4,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_Diagnosa"
-        android:text="Diagnosa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_Diagnosa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Diagnosa" />
+
+        <Button
+            android:id="@+id/btn_cekInputKondisiLingkungan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTintMode="src_atop"
+            android:text="Cek kondisi lingkugnan  dipilih" />
 
         <ListView
 
-            android:id="@+id/listKondisi"
+            android:id="@+id/listKondisiLingkungan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
