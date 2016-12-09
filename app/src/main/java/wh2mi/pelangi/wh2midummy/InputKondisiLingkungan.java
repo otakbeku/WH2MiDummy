@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.app.AlertDialog;
 
 import java.util.ArrayList;
 
@@ -28,13 +30,38 @@ public class InputKondisiLingkungan extends Activity {
 
     CustomAdapterKondisiLingkungan adapterKondisiLingkungan;
     Controller controller;
+    ArrayList<ModelGejala> modelGejala;
+
+    ArrayList<String> idGejalaSelected;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inputkondisilingkungan);
 
+        idGejalaSelected = new ArrayList<String>();
 
+        //Untuk mengambil data dar intent sebelumnya
+        Intent GET_GEJALA = getIntent();
+//        modelGejala = (ArrayList<ModelGejala>) GET_GEJALA.getSerializableExtra("SelectedGejala");
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            int jumlahGejala = bundle.getInt("jumlahGejala");
+            Log.i("jumlahgejaKL ", Integer.toString(jumlahGejala));
+
+            for (int i = 0; i < jumlahGejala; i++) {
+                idGejalaSelected.add(i, bundle.getString("idGejala-" + i));
+                Toast.makeText(getApplicationContext(), "Anda  memilih gejala " + idGejalaSelected.get(i).toString(), Toast.LENGTH_SHORT).show();
+                Log.i("gejalaSelected: ", idGejalaSelected.get(i).toString());
+            }
+        }
+
+
+        controller = new Controller(InputKondisiLingkungan.this, idGejalaSelected);
+
+        btn_Diagnosa = (Button) findViewById(R.id.btn_Diagnosa);
         //Intent untuk ke halaman diagnosa
         btn_Diagnosa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,35 +74,9 @@ public class InputKondisiLingkungan extends Activity {
             }
         });
 
-//        //CONTOH
-//        String[] Gejala = new String[]{
-//                "Pusing", "muntah", "memar", "gatal", "sakit sendi", "Pusing", "muntah", "memar",
-//                "gatal", "sakit sendi", "Pusing", "muntah", "memar", "gatal", "sakit sendi",
-//                "Pusing", "muntah", "memar", "gatal", "sakit sendi", "Pusing", "muntah", "memar",
-//                "gatal", "sakit sendi", "Pusing", "muntah", "memar", "gatal", "sakit sendi"
-//        };
-//
-//
-//        ArrayAdapter<String> adapter_kondisi = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, Gejala);
-//
-//        //instansiasi ListView
-//        listKondisi = (ListView) findViewById(R.id.listKondisi);
-//        listKondisi.setAdapter(adapter_kondisi);
-//
-//        //Instansiasi Button
-//        btn_Diagnosa = (Button) findViewById(R.id.btn_Diagnosa);
-//
-//        //Buat nge-Toast doang
-//        listKondisi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                int itemPosition = position;
-//
-//                String itemValue = (String) listKondisi.getItemAtPosition(position);
-//
-//                Toast.makeText(getApplicationContext(), "Posisi " + itemPosition + " value: " + itemValue, Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        //JANGAN LUPAAA
+        displayKondisiLingkunganListView();
+        checkButtonClick();
     }
 
     /**
@@ -94,7 +95,7 @@ public class InputKondisiLingkungan extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ModelKondisiLingkungan modelKondisiLingkungan = (ModelKondisiLingkungan) adapterView.getItemAtPosition(i);
-                Toast.makeText(getApplicationContext(), "Memilih: " + modelKondisiLingkungan.getKetKondisiLingkungan(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Memilih: " + modelKondisiLingkungan.getTextKondisiLingkungan(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -153,7 +154,7 @@ public class InputKondisiLingkungan extends Activity {
                         ModelKondisiLingkungan modelKondisiLingkungan = (ModelKondisiLingkungan) cbxKondisiLingkungan.getTag();
 
                         //Test dengan toast
-                        Toast.makeText(getApplicationContext(), "User memilih: " + cbxKondisiLingkungan.getText()
+                        Toast.makeText(getApplicationContext(), "User memilih: " + cbxKondisiLingkungan.getText().toString()
                                 + " nilai: " + cbxKondisiLingkungan.isChecked(), Toast.LENGTH_SHORT).show();
                         modelKondisiLingkungan.setSelected(cbxKondisiLingkungan.isChecked());
                     }
@@ -164,12 +165,15 @@ public class InputKondisiLingkungan extends Activity {
 
             ModelKondisiLingkungan modelKondisiLingkungan = KondisiLingkunganList.get(position);
 //            holder.namaKondisiLingkungan.setText(modelKondisiLingkungan.getKetKondisiLingkungan());//lebih baik di ganti dengan ketKondisiLingkungan, soalnya nambah ribet kalo di tambah textview
-            holder.namaKondisiLingkungan.setText("");
-//            holder.checkboxKondisiLingkungan.setText("KondisiLingkungan"); // tidak perlu di pakai, yang digunakan hanya keterangan KondisiLingkungan
-            holder.checkboxKondisiLingkungan.setText(modelKondisiLingkungan.getKetKondisiLingkungan());
+            holder.namaKondisiLingkungan.setText(modelKondisiLingkungan.getTextKondisiLingkungan());
+            holder.checkboxKondisiLingkungan.setText("KondisiLingkungan"); // tidak perlu di pakai, yang digunakan hanya keterangan KondisiLingkungan
+//            holder.checkboxKondisiLingkungan.setText("");
             holder.checkboxKondisiLingkungan.setChecked(modelKondisiLingkungan.isSelected());
             holder.checkboxKondisiLingkungan.setTag(modelKondisiLingkungan);
 
+//            Toast.makeText(getApplicationContext(), "kondisi: " + modelKondisiLingkungan.getKetKondisiLingkungan(), Toast.LENGTH_LONG).show();
+
+            Log.i("kondisiKL", modelKondisiLingkungan.getTextKondisiLingkungan());
 
             return convertView;
         }
@@ -190,13 +194,22 @@ public class InputKondisiLingkungan extends Activity {
                 for (int i = 0; i < KondisiLingkunganList.size(); i++) {
                     ModelKondisiLingkungan modelKondisiLingkungan = KondisiLingkunganList.get(i);
                     if (modelKondisiLingkungan.isSelected()) {
-                        responText.append("\n-> " + modelKondisiLingkungan.getKetKondisiLingkungan());
+                        responText.append("\n-> " + modelKondisiLingkungan.getTextKondisiLingkungan());
                     }
 
                 }
-                Toast.makeText(getApplicationContext(), responText, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), responText, Toast.LENGTH_SHORT).show();
+                showMessage("Data yang ditampilkan", responText.toString());
             }
         });
+    }
+
+    public void showMessage(String judul, String pesan) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(judul);
+        builder.setMessage(pesan);
+        builder.show();
     }
 
 }
