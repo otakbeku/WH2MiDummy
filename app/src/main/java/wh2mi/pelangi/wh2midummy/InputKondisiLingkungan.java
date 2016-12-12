@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.support.v7.app.AlertDialog;
 
 import java.util.ArrayList;
 
@@ -30,9 +30,11 @@ public class InputKondisiLingkungan extends Activity {
 
     CustomAdapterKondisiLingkungan adapterKondisiLingkungan;
     Controller controller;
-    ArrayList<ModelGejala> modelGejala;
-
+    //    ArrayList<ModelGejala> modelGejala;
+    ArrayList<ModelKondisiLingkungan> kondisiSelected;
     ArrayList<String> idGejalaSelected;
+    //    int jumlahGejala;
+//    int jumlahGejala;
 
 
     @Override
@@ -41,10 +43,7 @@ public class InputKondisiLingkungan extends Activity {
         setContentView(R.layout.inputkondisilingkungan);
 
         idGejalaSelected = new ArrayList<String>();
-
-        //Untuk mengambil data dar intent sebelumnya
-        Intent GET_GEJALA = getIntent();
-//        modelGejala = (ArrayList<ModelGejala>) GET_GEJALA.getSerializableExtra("SelectedGejala");
+        kondisiSelected = new ArrayList<ModelKondisiLingkungan>();
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -53,7 +52,7 @@ public class InputKondisiLingkungan extends Activity {
 
             for (int i = 0; i < jumlahGejala; i++) {
                 idGejalaSelected.add(i, bundle.getString("idGejala-" + i));
-                Toast.makeText(getApplicationContext(), "Anda  memilih gejala " + idGejalaSelected.get(i).toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Anda  memilih gejala " + idGejalaSelected.get(i).toString(), Toast.LENGTH_SHORT).show();
                 Log.i("gejalaSelected: ", idGejalaSelected.get(i).toString());
             }
         }
@@ -61,18 +60,49 @@ public class InputKondisiLingkungan extends Activity {
 
         controller = new Controller(InputKondisiLingkungan.this, idGejalaSelected);
 
+        ////////////////////////////////////////////////////
+        /////INTENT & PASSING DATA
+        ////////////////////////////////////////////////////
         btn_Diagnosa = (Button) findViewById(R.id.btn_Diagnosa);
         //Intent untuk ke halaman diagnosa
         btn_Diagnosa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent i_hasilDiagnosa = new Intent(InputKondisiLingkungan.this, HasilDiagnosa.class);
-//                startActivity(i_hasilDiagnosa);
+                ArrayList<ModelKondisiLingkungan> kondisiLingkunganList = adapterKondisiLingkungan.KondisiLingkunganList;
+                for (int i = 0; i < kondisiLingkunganList.size(); i++) {
+                    ModelKondisiLingkungan modelKondisiLingkungan = kondisiLingkunganList.get(i);
+                    if (modelKondisiLingkungan.isSelected()) {
+                        kondisiSelected.add(modelKondisiLingkungan);
+                    }
+                }
 
                 Intent i_cardDiagnosa = new Intent(InputKondisiLingkungan.this, cardViewDiagnosa.class);
-                startActivity(i_cardDiagnosa);
+                Bundle bundle = new Bundle();
+                if (getKondisiSelected() != null) {
+                    int jumlahKondisi = getKondisiSelected().size();
+                    bundle.putInt("jumlahKondisi", jumlahKondisi);
+                    bundle.putInt("jumlahGejala", idGejalaSelected.size());
+
+                    //KONDISI
+                    for (int i = 0; i < jumlahKondisi; i++) {
+                        bundle.putString("idKondisi" + i, getKondisiSelected().get(i).getTextKondisiLingkungan());
+                    }
+
+                    //GEJALA
+                    for (int i = 0; i < idGejalaSelected.size(); i++) {
+                        bundle.putString("idGejala" + i, idGejalaSelected.get(i));
+                    }
+
+                    if (bundle != null) {
+                        i_cardDiagnosa.putExtras(bundle);
+                        startActivity(i_cardDiagnosa);
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Anda belum memilih gejala", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+        ////////////////////////////////////////////////////
 
         //JANGAN LUPAAA
         displayKondisiLingkunganListView();
@@ -154,8 +184,8 @@ public class InputKondisiLingkungan extends Activity {
                         ModelKondisiLingkungan modelKondisiLingkungan = (ModelKondisiLingkungan) cbxKondisiLingkungan.getTag();
 
                         //Test dengan toast
-                        Toast.makeText(getApplicationContext(), "User memilih: " + cbxKondisiLingkungan.getText().toString()
-                                + " nilai: " + cbxKondisiLingkungan.isChecked(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "User memilih: " + cbxKondisiLingkungan.getText().toString()
+//                                + " nilai: " + cbxKondisiLingkungan.isChecked(), Toast.LENGTH_SHORT).show();
                         modelKondisiLingkungan.setSelected(cbxKondisiLingkungan.isChecked());
                     }
                 });
@@ -195,6 +225,7 @@ public class InputKondisiLingkungan extends Activity {
                     ModelKondisiLingkungan modelKondisiLingkungan = KondisiLingkunganList.get(i);
                     if (modelKondisiLingkungan.isSelected()) {
                         responText.append("\n-> " + modelKondisiLingkungan.getTextKondisiLingkungan());
+                        kondisiSelected.add(modelKondisiLingkungan);
                     }
 
                 }
@@ -204,6 +235,11 @@ public class InputKondisiLingkungan extends Activity {
         });
     }
 
+    public ArrayList<ModelKondisiLingkungan> getKondisiSelected() {
+        return kondisiSelected;
+    }
+
+
     public void showMessage(String judul, String pesan) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
@@ -212,4 +248,11 @@ public class InputKondisiLingkungan extends Activity {
         builder.show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!kondisiSelected.isEmpty()) {
+            kondisiSelected.clear();
+        }
+    }
 }
