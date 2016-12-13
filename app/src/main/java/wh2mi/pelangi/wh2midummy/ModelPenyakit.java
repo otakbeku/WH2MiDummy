@@ -6,7 +6,7 @@ package wh2mi.pelangi.wh2midummy;
 
 public class ModelPenyakit {
 
-    private String idPenyakit, PenyebabPenyakit, namaPenyakit, deskripsiPenyakit;
+    private String idPenyakit, PenyebabPenyakit, namaPenyakit, deskripsiPenyakit, rujukan;
     private boolean selected = false;
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -14,11 +14,28 @@ public class ModelPenyakit {
     ///////////////////////////////////////////////////////////////////////////////////////////
 
 
+    public ModelPenyakit(String idPenyakit, String penyebabPenyakit, String namaPenyakit, String deskripsiPenyakit, String rujukan) {
+        this.idPenyakit = idPenyakit;
+        PenyebabPenyakit = penyebabPenyakit;
+        this.namaPenyakit = namaPenyakit;
+        this.deskripsiPenyakit = deskripsiPenyakit;
+        this.rujukan = rujukan;
+    }
+
     public ModelPenyakit(String idPenyakit, String penyebabPenyakit, String namaPenyakit, String deskripsiPenyakit) {
         this.idPenyakit = idPenyakit;
         PenyebabPenyakit = penyebabPenyakit;
         this.namaPenyakit = namaPenyakit;
         this.deskripsiPenyakit = deskripsiPenyakit;
+    }
+
+    public ModelPenyakit(String idPenyakit, String penyebabPenyakit, String namaPenyakit, String deskripsiPenyakit, String rujukan, boolean selected) {
+        this.idPenyakit = idPenyakit;
+        PenyebabPenyakit = penyebabPenyakit;
+        this.namaPenyakit = namaPenyakit;
+        this.deskripsiPenyakit = deskripsiPenyakit;
+        this.rujukan = rujukan;
+        this.selected = selected;
     }
 
     public ModelPenyakit(String idPenyakit, String penyebabPenyakit, String namaPenyakit, String deskripsiPenyakit, boolean selected) {
@@ -70,5 +87,13 @@ public class ModelPenyakit {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public String getRujukan() {
+        return rujukan;
+    }
+
+    public void setRujukan(String rujukan) {
+        this.rujukan = rujukan;
     }
 }

@@ -210,7 +210,7 @@ public class Controller {
         c_Penyakit = dbHelper.query("tabel_Penyakit", null, null, null, null, null, null);
         if (c_Penyakit.moveToFirst()) {
             do {
-                this.tempPenyakit.add(new ModelPenyakit(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3)));
+                this.tempPenyakit.add(new ModelPenyakit(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3), c_Penyakit.getString(4)));
                 Toast.makeText(context, "Nama Penyakit: " + c_Penyakit.getString(3), Toast.LENGTH_SHORT).show();//Untuk mengecek
             } while (c_Penyakit.moveToNext());
         }
@@ -236,7 +236,7 @@ public class Controller {
             c_Penyakit = dbHelper.query("tabel_penyakit", null, null, null, null, null, null);
             if (c_Penyakit.moveToFirst()) {
                 do {
-                    temp = new ModelPenyakit(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3));
+                    temp = new ModelPenyakit(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3), c_Penyakit.getString(4));
                     if (temp.getIdPenyakit().equals(FK_idGejalaList.get(i))) {
                         this.tempPenyakit.add(temp);
                     }
@@ -375,6 +375,33 @@ public class Controller {
 
         return kondisiByIdPenyakit;
     }
+
+    public String getRujukanByIdPenyakit(String idPenyakit) {
+        String rujukan = null;
+        ModelPenyakit temp;
+        try {
+            dbHelper.createDataBase();
+        } catch (IOException ioe) {
+            throw new Error("Unable to create database");
+        }
+        try {
+            dbHelper.openDataBase();
+        } catch (SQLException sqle) {
+            throw sqle;
+        }
+        c_Penyakit = dbHelper.query("tabel_penyakit", null, null, null, null, null, null);
+        if (c_Penyakit.moveToFirst()) {
+            do {
+                temp = new ModelPenyakit(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3));
+                if (temp.getIdPenyakit().equals(idPenyakit)) {
+                    rujukan = temp.getRujukan();
+                }
+//                    Toast.makeText(context, "Nama Penyakit: " + c_Penyakit.getString(3), Toast.LENGTH_SHORT).show();//Untuk mengecek
+            } while (c_Penyakit.moveToNext());
+        }
+        return rujukan;
+    }
+
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
 

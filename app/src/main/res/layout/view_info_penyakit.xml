@@ -63,6 +63,12 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
                 android:text="Saran Penanganan pertama" />
+            <Button
+                android:id="@+id/btnSaranRujukan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="Saran Penanganan pertama" />
         </LinearLayout>
 
     </ScrollView>

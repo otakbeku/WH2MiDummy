@@ -12,9 +12,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class InfoPenyakit extends AppCompatActivity {
-    Button btnSaranPencegahan, btnSaranPP;
+    Button btnSaranPencegahan, btnSaranPP, btnSaranRujukan;
     TextView txtNamaPenyakit, txtListGejala, txtListKondisi, txtDeskripsi;
-    String idPenyakit;
+    String idPenyakit, saranRujukan;
     Controller controller;
     ArrayList<String> saranPertamaByIdPenyakit, saranPencegahanByIdPenyakit;
     StringBuffer bufferGejala,
@@ -29,6 +29,7 @@ public class InfoPenyakit extends AppCompatActivity {
         //Instansiai konten
         btnSaranPencegahan = (Button) findViewById(R.id.btnSaranPencegahan);
         btnSaranPP = (Button) findViewById(R.id.btnSaranPP);
+        btnSaranRujukan = (Button) findViewById(R.id.btnSaranRujukan);
 
         txtNamaPenyakit = (TextView) findViewById(R.id.txtNamaPenyakit);
         txtListGejala = (TextView) findViewById(R.id.txtListGejala);
@@ -44,6 +45,8 @@ public class InfoPenyakit extends AppCompatActivity {
         controller = new Controller(this, idPenyakit);
         saranPertamaByIdPenyakit = controller.getSaranPertamaByIdPenyakit();
         saranPencegahanByIdPenyakit = controller.getSaranPencegahanByIdPenyakit();
+
+        saranRujukan = controller.getRujukanByIdPenyakit(idPenyakit);
 
         //STRINGBUFFER
         bufferGejala = new StringBuffer();
@@ -63,7 +66,7 @@ public class InfoPenyakit extends AppCompatActivity {
             bufferKondisi.append("\n" + (i + 1) + ". " + bundle.getString("kondisike" + i));
         }
         for (int i = 0; i < saranPencegahanByIdPenyakit.size(); i++) {
-            bufferSaranPencegahanByIdPenyakit.append( saranPencegahanByIdPenyakit.get(i));
+            bufferSaranPencegahanByIdPenyakit.append(saranPencegahanByIdPenyakit.get(i));
         }
         for (int i = 0; i < saranPertamaByIdPenyakit.size(); i++) {
             bufferSaranPertamaByIdPenyakit.append(saranPertamaByIdPenyakit.get(i));
@@ -84,6 +87,13 @@ public class InfoPenyakit extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showMessage("Saran Penanganan Pertama", bufferSaranPertamaByIdPenyakit.toString());
+            }
+        });
+
+        btnSaranRujukan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMessage("Saran Meminta Rujukan", "Berdasarkan kondisi gejala Anda, maka saran meminta rujukan Anda adalah: "+saranRujukan);
             }
         });
     }
