@@ -24,7 +24,7 @@ public class InfoPenyakit extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info_penyakit);
+        setContentView(R.layout.view_info_penyakit);
 
         //Instansiai konten
         btnSaranPencegahan = (Button) findViewById(R.id.btnSaranPencegahan);
@@ -96,7 +96,7 @@ public class InfoPenyakit extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //OCDENYA DISINI NANTI
+                //CODENYA DISINI NANTI
             }
         });
         builder.show();

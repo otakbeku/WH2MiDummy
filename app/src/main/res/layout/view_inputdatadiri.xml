@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="wh2mi.pelangi.wh2midummy.MainActivity">
+    tools:context="wh2mi.pelangi.wh2midummy.InputDataDiri">
 
     <LinearLayout
         android:layout_centerHorizontal="true"
@@ -39,13 +39,8 @@
                 android:layout_height="wrap_content" />
         </RadioGroup>
         <Button
-            android:id="@+id/btn_masuk"
+            android:id="@+id/btnMasuk"
             android:text="Masuk"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/btn_EmergencyCall"
-            android:text="Emergency Call"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

@@ -71,7 +71,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         outputStream.flush();
         outputStream.close();
         inputStream.close();
-
     }
 
     public void openDataBase() throws SQLiteException {
@@ -90,7 +89,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
 
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
     }
 
     @Override
@@ -101,9 +99,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
-
     }
 
     public Cursor query(String table, String[] columns, String selection, String[] seletionArgs, String grouBy, String having, String orderBy) {

@@ -30,17 +30,15 @@ public class InputKondisiLingkungan extends Activity {
 
     CustomAdapterKondisiLingkungan adapterKondisiLingkungan;
     Controller controller;
-    //    ArrayList<ModelGejala> modelGejala;
     ArrayList<ModelKondisiLingkungan> kondisiSelected;
     ArrayList<String> idGejalaSelected;
-    //    int jumlahGejala;
-//    int jumlahGejala;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.inputkondisilingkungan);
+        setContentView(R.layout.view_inputkondisilingkungan);
 
         idGejalaSelected = new ArrayList<String>();
         kondisiSelected = new ArrayList<ModelKondisiLingkungan>();
@@ -76,7 +74,7 @@ public class InputKondisiLingkungan extends Activity {
                     }
                 }
 
-                Intent i_cardDiagnosa = new Intent(InputKondisiLingkungan.this, cardViewDiagnosa.class);
+                Intent i_cardDiagnosa = new Intent(InputKondisiLingkungan.this, TampilDiagnosa.class);
                 Bundle bundle = new Bundle();
                 if (getKondisiSelected() != null) {
                     int jumlahKondisi = getKondisiSelected().size();
@@ -115,7 +113,7 @@ public class InputKondisiLingkungan extends Activity {
      */
     private void displayKondisiLingkunganListView() {
         ArrayList<ModelKondisiLingkungan> modelKondisiLingkunganArrayList = controller.getTempKondisiLingkungan();
-        adapterKondisiLingkungan = new CustomAdapterKondisiLingkungan(this, R.layout.kondisilingkungan_info, modelKondisiLingkunganArrayList);
+        adapterKondisiLingkungan = new CustomAdapterKondisiLingkungan(this, R.layout.adapter_kondisilingkungan, modelKondisiLingkunganArrayList);
         ListView listView = (ListView) findViewById(R.id.listKondisiLingkungan);
 
         //Assign adapter ke listview
@@ -168,7 +166,7 @@ public class InputKondisiLingkungan extends Activity {
 
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.kondisilingkungan_info, null);
+                convertView = inflater.inflate(R.layout.adapter_kondisilingkungan, null);
 
                 holder = new ViewHolder();
 
@@ -196,7 +194,7 @@ public class InputKondisiLingkungan extends Activity {
             ModelKondisiLingkungan modelKondisiLingkungan = KondisiLingkunganList.get(position);
 //            holder.namaKondisiLingkungan.setText(modelKondisiLingkungan.getKetKondisiLingkungan());//lebih baik di ganti dengan ketKondisiLingkungan, soalnya nambah ribet kalo di tambah textview
             holder.namaKondisiLingkungan.setText(modelKondisiLingkungan.getTextKondisiLingkungan());
-            holder.checkboxKondisiLingkungan.setText("KondisiLingkungan"); // tidak perlu di pakai, yang digunakan hanya keterangan KondisiLingkungan
+            holder.checkboxKondisiLingkungan.setText(""); // tidak perlu di pakai, yang digunakan hanya keterangan KondisiLingkungan
 //            holder.checkboxKondisiLingkungan.setText("");
             holder.checkboxKondisiLingkungan.setChecked(modelKondisiLingkungan.isSelected());
             holder.checkboxKondisiLingkungan.setTag(modelKondisiLingkungan);
@@ -214,6 +212,7 @@ public class InputKondisiLingkungan extends Activity {
      */
     private void checkButtonClick() {
         Button btn_cekInputKondisiLingkungan = (Button) findViewById(R.id.btn_cekInputKondisiLingkungan);
+        btn_cekInputKondisiLingkungan.setVisibility(View.GONE);
         btn_cekInputKondisiLingkungan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

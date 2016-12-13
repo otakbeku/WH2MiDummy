@@ -28,7 +28,6 @@ public class ModelGejala {
         this.ketGejala = ketGejala;
     }
 
-
     public ModelGejala(String idGejala, String textGejala, String FK_IdPenyakit, boolean selected) {
         this.idGejala = idGejala;
         this.textGejala = textGejala;

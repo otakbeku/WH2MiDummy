@@ -3,34 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".cardViewDiagnosa">
+    tools:context=".TampilDiagnosa">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerDiagnosa"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
+        android:scrollbars="vertical" />
 
-
-
-    <!--<TextView-->
-    <!--android:id="@+id/teks_coba"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
-    <!---->
-    <!--</TextView>-->
-
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginTop="40dp"-->
-    <!--android:text="ANDA TERJANGKIT KANKER"-->
-    <!--android:textAlignment="center" />-->
-    <!--</LinearLayout>-->
 </RelativeLayout>

@@ -22,7 +22,6 @@ public class Controller {
     private ArrayList<ModelGejala> tempGejala;
     private ArrayList<ModelKondisiLingkungan> tempKondisiLingkungan;
     private ArrayList<ModelPenyakit> tempPenyakit;
-//    private ArrayList<ModelSaranPencegahan> tempSaranPencegahan;
 
     private ArrayList<String> saranPencegahanByIdPenyakit;
     private ArrayList<String> saranPertamaByIdPenyakit;
@@ -87,7 +86,6 @@ public class Controller {
 //                Toast.makeText(context, "Nama gejala: " + c_Gejala.getString(2), Toast.LENGTH_SHORT).show();//Untuk mengecek
             } while (c_Gejala.moveToNext());
         }
-//        return tempGejala;
     }
 
 
@@ -133,10 +131,9 @@ public class Controller {
         if (c_KondisiLingkungan.moveToFirst()) {
             do {
                 this.tempKondisiLingkungan.add(new ModelKondisiLingkungan(c_KondisiLingkungan.getString(0), c_KondisiLingkungan.getString(1), c_KondisiLingkungan.getString(2), c_KondisiLingkungan.getString(3)));
-                Toast.makeText(context, "Nama KondisiLingkungan: " + c_KondisiLingkungan.getString(3), Toast.LENGTH_SHORT).show();//Untuk mengecek
+//                Toast.makeText(context, "Nama KondisiLingkungan: " + c_KondisiLingkungan.getString(3), Toast.LENGTH_SHORT).show();//Untuk mengecek
             } while (c_KondisiLingkungan.moveToNext());
         }
-//        return tempKondisiLingkungan;
     }
 
     private void getAllKondisiLingkungan(Context context, ArrayList<String> c_FK_idGejala) {
@@ -163,20 +160,12 @@ public class Controller {
                     temp = new ModelKondisiLingkungan(c_KondisiLingkungan.getString(0), c_KondisiLingkungan.getString(1), c_KondisiLingkungan.getString(2), c_KondisiLingkungan.getString(3));
                     if (temp.getFK_idPenyakit().equals(FK_idGejalaList.get(i))) {
                         Log.i("IdGejalaCon", FK_idGejalaList.get(i));
-//                        if(i>0 && this.tempKondisiLingkungan.)
                         this.tempKondisiLingkungan.add(temp);
                     }
-//                    this.tempKondisiLingkungan.add(new ModelKondisiLingkungan(c_KondisiLingkungan.getString(0), c_KondisiLingkungan.getString(1), c_KondisiLingkungan.getString(2), c_KondisiLingkungan.getString(3)));
 //                    Toast.makeText(context, "Nama KondisiLingkungan: " + c_KondisiLingkungan.getString(3), Toast.LENGTH_SHORT).show();//Untuk mengecek
                 } while (c_KondisiLingkungan.moveToNext());
             }
         }
-
-        //////////////
-
-
-//        this.tempKondisiLingkungan = tempModel;
-//        return tempKondisiLingkungan;
     }
 
 
@@ -242,23 +231,6 @@ public class Controller {
         } catch (SQLException sqle) {
             throw sqle;
         }
-
-//        c_Penyakit = dbHelper.query("tabel_Penyakit", null, null, null, null, null, null);
-//        if (c_Penyakit.moveToFirst()) {
-//            do {
-//                this.tempPenyakit.add(new ModelPenyakit(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3)));
-////                Toast.makeText(context, "Nama Penyakit: " + c_Penyakit.getString(2), Toast.LENGTH_SHORT).show();//Untuk mengecek
-//            } while (c_Penyakit.moveToNext());
-//        }
-
-//        for (int i = 0; i < tempPenyakit.size(); i++) {
-//            Log.i("index", Integer.toString(i));
-//            if (this.tempPenyakit.get(i).getFK_idGejala().equals(c_FK_idGejala.get(i))) {
-//                tempModel.add(this.tempPenyakit.get(i));
-//                Toast.makeText(context, "Nama Penyakit: " + tempModel.get(i).toString(), Toast.LENGTH_SHORT).show();
-//            }
-//    }
-        ////TAMBAH TESTING
         for (int i = 0; i < FK_idGejalaList.size(); i++) {
             Log.i("jumlahFK", Integer.toString(FK_idGejalaList.size()));
             c_Penyakit = dbHelper.query("tabel_penyakit", null, null, null, null, null, null);
@@ -266,20 +238,12 @@ public class Controller {
                 do {
                     temp = new ModelPenyakit(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3));
                     if (temp.getIdPenyakit().equals(FK_idGejalaList.get(i))) {
-//                        if(i>0 && this.tempPenyakit.)
                         this.tempPenyakit.add(temp);
                     }
-//                    this.tempPenyakit.add(new ModelPenyakit(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3)));
 //                    Toast.makeText(context, "Nama Penyakit: " + c_Penyakit.getString(3), Toast.LENGTH_SHORT).show();//Untuk mengecek
                 } while (c_Penyakit.moveToNext());
             }
         }
-
-        //////////////
-
-
-//        this.tempPenyakit = tempModel;
-//        return tempPenyakit;
     }
 
 
@@ -303,10 +267,7 @@ public class Controller {
 
 
     //////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////
+    //////GET EVERTHING BY IDPENYAKIT
     //////////////////////////////////////////////////////
 
 
@@ -388,8 +349,6 @@ public class Controller {
         return saranPertamaByIdPenyakit;
     }
 
-    //
-//
     private ArrayList<String> getKondisiByIdPenyakit(String idPenyakit) {
         ModelKondisiLingkungan temp;
         ArrayList<String> kondisiByIdPenyakit = new ArrayList<>();
@@ -408,16 +367,16 @@ public class Controller {
             do {
                 temp = new ModelKondisiLingkungan(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3));
                 if (temp.getFK_idPenyakit().equals(idPenyakit)) {
-//                        if(i>0 && this.tempPenyakit.)
                     kondisiByIdPenyakit.add(temp.getTextKondisiLingkungan());
                 }
-//                    this.tempPenyakit.add(new ModelPenyakit(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3)));
 //                    Toast.makeText(context, "Nama Penyakit: " + c_Penyakit.getString(3), Toast.LENGTH_SHORT).show();//Untuk mengecek
             } while (c_Penyakit.moveToNext());
         }
 
         return kondisiByIdPenyakit;
     }
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
 
 
     public ArrayList<String> getSaranPencegahanByIdPenyakit() {

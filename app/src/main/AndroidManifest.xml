@@ -15,14 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".InputDataDiri" />
         <activity android:name=".InputGejala" />
-        <!-- <activity android:name=".HalamanDepan"></activity> -->
         <activity android:name=".InputKondisiLingkungan" />
-        <activity android:name=".HasilDiagnosa" />
-        <activity android:name=".cardViewDiagnosa" />
+        <activity android:name=".TampilDiagnosa" />
         <activity android:name=".InfoPenyakit" />
-        <activity android:name=".SaranPenanganan" />
-        <activity android:name=".SaranPencegahan"></activity>
     </application>
 
 </manifest>

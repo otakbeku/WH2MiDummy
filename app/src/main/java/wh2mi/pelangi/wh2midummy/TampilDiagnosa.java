@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by Kotak Hitam on 12/1/2016.
  */
 
-public class cardViewDiagnosa extends ActionBarActivity {
+public class TampilDiagnosa extends ActionBarActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -64,7 +64,7 @@ public class cardViewDiagnosa extends ActionBarActivity {
                 Log.i("kondisiSelectedCD: ", textKondisi.get(i).toString());
             }
         }
-        controller = new Controller(cardViewDiagnosa.this, idGejalaSelected);
+        controller = new Controller(TampilDiagnosa.this, idGejalaSelected);
         modelPenyakitArrayList = controller.getTempPenyakit();
 
     }
@@ -78,16 +78,17 @@ public class cardViewDiagnosa extends ActionBarActivity {
             @Override
             public void onItemClick(int position, View v) {
                 Log.i(LOG_TAG, "menekan " + position);
+////////////////////////////////////////////////
 //                showMessage("Hasil Diagnosa anda", "Posisi: " + position);
 //                if(modelPenyakitArrayList.get(position).isSelected()) {
 //                showMessage("Hasil Diagnosa anda", "Isi: " + modelPenyakitArrayList.get(position).getDeskripsiPenyakit());
 //                }
 
-                ///// testing
+////////////////////////////////////////////////
                 Bundle bundle = new Bundle();
                 ArrayList<String> gejalaByIdPenyakit;
                 ArrayList<String> kondisiByIdPenyakit;
-                controller = new Controller(cardViewDiagnosa.this, modelPenyakitArrayList.get(position).getIdPenyakit());
+                controller = new Controller(TampilDiagnosa.this, modelPenyakitArrayList.get(position).getIdPenyakit());
                 gejalaByIdPenyakit = controller.getGejalaByIdPenyakit();
                 kondisiByIdPenyakit = controller.getKondisiByIdPenyakit();
 
@@ -104,7 +105,7 @@ public class cardViewDiagnosa extends ActionBarActivity {
 
                 bundle.putString("deskripsiPenyakit", modelPenyakitArrayList.get(position).getDeskripsiPenyakit());
 
-                Intent i_infoPenyakit = new Intent(cardViewDiagnosa.this, InfoPenyakit.class);
+                Intent i_infoPenyakit = new Intent(TampilDiagnosa.this, InfoPenyakit.class);
                 i_infoPenyakit.putExtras(bundle);
                 startActivity(i_infoPenyakit);
 
@@ -135,12 +136,20 @@ public class cardViewDiagnosa extends ActionBarActivity {
                 Log.i("kondisiSelectedCD: ", textKondisi.get(i).toString());
             }
         }
-        controller = new Controller(cardViewDiagnosa.this, idGejalaSelected);
+        controller = new Controller(TampilDiagnosa.this, idGejalaSelected);
         modelPenyakitArrayList = controller.getTempPenyakit();
         ArrayList<ModelPenyakit> temp = getModelPenyakitArrayList();
         ArrayList result = new ArrayList<ModelObject>();
 
-//
+        for (int i = 0; i < temp.size(); i++) {
+            ModelObject obj = new ModelObject(temp.get(i).getNamaPenyakit(),
+                    temp.get(i).getDeskripsiPenyakit());
+            result.add(i, obj);
+        }
+
+        ////////////////////////////////////////////////////
+        //BUAT NYOBA DISINI
+        ////////////////////////////////////////////////////
 //        String[] Dataset_diagnosa = new String[]{
 //                "kanker1", "kanker2", "kanker3", "kanker4"
 //        };
@@ -152,20 +161,6 @@ public class cardViewDiagnosa extends ActionBarActivity {
 //            ModelObject obj = new ModelObject(Dataset_diagnosa[i], Dataset_desk[i]);
 //            result.add(i, obj);
 //        }
-
-        ////////////////////////////////////////////////////
-        //BUAT INSTANSIASI BARU NANTI DISINI
-        ////////////////////////////////////////////////////
-//        ArrayList<String> judul = new ArrayList<>();
-//        ArrayList<String> deskripsi = new ArrayList<>();
-
-        for (int i = 0; i < temp.size(); i++) {
-            ModelObject obj = new ModelObject(temp.get(i).getNamaPenyakit(),
-                    temp.get(i).getDeskripsiPenyakit());
-            result.add(i, obj);
-        }
-
-
         return result;
     }
 

@@ -29,41 +29,26 @@ public class InputGejala extends Activity {
 
     private ListView listGejala;
     private Button btn_inputKondisi;
-
-    //tambahan
     CustomAdapterGejala adapterGejala;
     Controller controller;
 
     ArrayList<ModelGejala> gejalaSelected;
-//    ArrayList<String> gejalaSelected;
-
-//    ParseGejala p;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.inputgejala);
+        setContentView(R.layout.view_inputgejala);
 
-        // Tambahan
-//        p = new ParseGejala();
-//        p.put();
-
+        //INSTANSIASI
         gejalaSelected = new ArrayList<ModelGejala>();
-
-
-        //TAMBAHAN GEJALA
         controller = new Controller(InputGejala.this);
 
-
-        //Instansiasi Button
         btn_inputKondisi = (Button) findViewById(R.id.btn_inputKondisi);
 
         //Intent untuk ke halaman input kondisi
         btn_inputKondisi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ////////////////////////////
                 ArrayList<ModelGejala> gejalaList = adapterGejala.gejalaList;
                 for (int i = 0; i < gejalaList.size(); i++) {
                     ModelGejala modelGejala = gejalaList.get(i);
@@ -71,18 +56,12 @@ public class InputGejala extends Activity {
                         gejalaSelected.add(modelGejala);
                     }
                 }
-                ////////////////////////////
-
 
                 Intent i_inputKondisi = new Intent(InputGejala.this, InputKondisiLingkungan.class);
                 Bundle bundle = new Bundle();
                 if (getSelectedGejala() != null) {
                     int jumlahGejala = getSelectedGejala().size();
                     bundle.putInt("jumlahGejala", jumlahGejala);
-//                    for (int i = 0; i < jumlahGejala; i++) {
-//                        bundle.putString("idGejala-" + i, getSelectedGejala().get(i).getIdGejala());
-//                        Log.i("idGejala: ", getSelectedGejala().get(i).getIdGejala());
-//                    }
                     for (int i = 0; i < jumlahGejala; i++) {
                         bundle.putString("idGejala-" + i, getSelectedGejala().get(i).getFK_IdPenyakit());
                         Log.i("idGejala: ", getSelectedGejala().get(i).getFK_IdPenyakit());
@@ -110,7 +89,7 @@ public class InputGejala extends Activity {
      */
     private void displayGejalaListView() {
         ArrayList<ModelGejala> modelGejalaArrayList = controller.getTempGejala();
-        adapterGejala = new CustomAdapterGejala(this, R.layout.gejala_info, modelGejalaArrayList);
+        adapterGejala = new CustomAdapterGejala(this, R.layout.adapter_gejala, modelGejalaArrayList);
         ListView listView = (ListView) findViewById(R.id.listGejala);
 
         //Assign adapter ke listview
@@ -164,7 +143,7 @@ public class InputGejala extends Activity {
 
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.gejala_info, null);
+                convertView = inflater.inflate(R.layout.adapter_gejala, null);
 
                 holder = new ViewHolder();
 
@@ -208,6 +187,7 @@ public class InputGejala extends Activity {
      */
     private void checkButtonClick() {
         Button btn_cekInputGejala = (Button) findViewById(R.id.btn_cekInputgejala);
+        btn_cekInputGejala.setVisibility(View.GONE);
         btn_cekInputGejala.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
