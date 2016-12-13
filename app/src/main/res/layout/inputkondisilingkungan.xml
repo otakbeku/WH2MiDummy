@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTintMode="src_atop"
-            android:text="Cek kondisi lingkugnan  dipilih" />
+            android:text="Cek kondisi lingkungan dipilih" />
 
         <ListView
 

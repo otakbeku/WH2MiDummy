@@ -79,9 +79,13 @@ public class InputGejala extends Activity {
                 if (getSelectedGejala() != null) {
                     int jumlahGejala = getSelectedGejala().size();
                     bundle.putInt("jumlahGejala", jumlahGejala);
+//                    for (int i = 0; i < jumlahGejala; i++) {
+//                        bundle.putString("idGejala-" + i, getSelectedGejala().get(i).getIdGejala());
+//                        Log.i("idGejala: ", getSelectedGejala().get(i).getIdGejala());
+//                    }
                     for (int i = 0; i < jumlahGejala; i++) {
-                        bundle.putString("idGejala-" + i, getSelectedGejala().get(i).getIdGejala());
-                        Log.i("idGejala: ", getSelectedGejala().get(i).getIdGejala());
+                        bundle.putString("idGejala-" + i, getSelectedGejala().get(i).getFK_IdPenyakit());
+                        Log.i("idGejala: ", getSelectedGejala().get(i).getFK_IdPenyakit());
                     }
                     if (bundle != null) {
                         i_inputKondisi.putExtras(bundle);

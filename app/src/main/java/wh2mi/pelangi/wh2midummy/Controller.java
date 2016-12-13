@@ -9,13 +9,15 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 public class Controller {
     Cursor c_Gejala;
     Cursor c_KondisiLingkungan;
     Cursor c_Penyakit;
-//    Cursor c_SaranPencegahan;
-//    Cursor c_SaranPertama;
+    Cursor c_SaranPencegahan;
+    Cursor c_SaranPertama;
 
     private ArrayList<ModelGejala> tempGejala;
     private ArrayList<ModelKondisiLingkungan> tempKondisiLingkungan;
@@ -25,6 +27,7 @@ public class Controller {
     private ArrayList<String> saranPencegahanByIdPenyakit;
     private ArrayList<String> saranPertamaByIdPenyakit;
     private ArrayList<String> gejalaByIdPenyakit;
+    private ArrayList<String> kondisiByIdPenyakit;
 
     DataBaseHelper dbHelper;
 
@@ -35,6 +38,7 @@ public class Controller {
         gejalaByIdPenyakit = getGejalaByIdPenyakit(idPenyakit);
         saranPencegahanByIdPenyakit = getSaranPencegahanByIdPenyakit(idPenyakit);
         saranPertamaByIdPenyakit = getSaranPertamaByIdPenyakit(idPenyakit);
+        kondisiByIdPenyakit = getKondisiByIdPenyakit(idPenyakit);
 
     }
 
@@ -138,6 +142,7 @@ public class Controller {
     private void getAllKondisiLingkungan(Context context, ArrayList<String> c_FK_idGejala) {
         ArrayList<ModelKondisiLingkungan> tempModel = new ArrayList<ModelKondisiLingkungan>();
         ModelKondisiLingkungan temp;
+        List<String> FK_idGejalaList = new ArrayList<String>(new LinkedHashSet<String>(c_FK_idGejala));
         try {
             dbHelper.createDataBase();
         } catch (IOException ioe) {
@@ -150,13 +155,14 @@ public class Controller {
         }
 
         ////TAMBAH TESTING
-        for (int i = 0; i < c_FK_idGejala.size(); i++) {
-            Log.i("jumlahFK", Integer.toString(c_FK_idGejala.size()));
+        for (int i = 0; i < FK_idGejalaList.size(); i++) {
+            Log.i("jumlahFKCOn", Integer.toString(FK_idGejalaList.size()));
             c_KondisiLingkungan = dbHelper.query("tabel_kondisilingkungan", null, null, null, null, null, null);
             if (c_KondisiLingkungan.moveToFirst()) {
                 do {
                     temp = new ModelKondisiLingkungan(c_KondisiLingkungan.getString(0), c_KondisiLingkungan.getString(1), c_KondisiLingkungan.getString(2), c_KondisiLingkungan.getString(3));
-                    if (temp.getFK_idGejala().equals(c_FK_idGejala.get(i))) {
+                    if (temp.getFK_idPenyakit().equals(FK_idGejalaList.get(i))) {
+                        Log.i("IdGejalaCon", FK_idGejalaList.get(i));
 //                        if(i>0 && this.tempKondisiLingkungan.)
                         this.tempKondisiLingkungan.add(temp);
                     }
@@ -225,6 +231,7 @@ public class Controller {
     private void getAllPenyakit(Context context, ArrayList<String> c_FK_idGejala) {
         ArrayList<ModelPenyakit> tempModel = new ArrayList<ModelPenyakit>();
         ModelPenyakit temp;
+        List<String> FK_idGejalaList = new ArrayList<String>(new LinkedHashSet<String>(c_FK_idGejala));
         try {
             dbHelper.createDataBase();
         } catch (IOException ioe) {
@@ -252,13 +259,13 @@ public class Controller {
 //            }
 //    }
         ////TAMBAH TESTING
-        for (int i = 0; i < c_FK_idGejala.size(); i++) {
-            Log.i("jumlahFK", Integer.toString(c_FK_idGejala.size()));
+        for (int i = 0; i < FK_idGejalaList.size(); i++) {
+            Log.i("jumlahFK", Integer.toString(FK_idGejalaList.size()));
             c_Penyakit = dbHelper.query("tabel_penyakit", null, null, null, null, null, null);
             if (c_Penyakit.moveToFirst()) {
                 do {
                     temp = new ModelPenyakit(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3));
-                    if (temp.getIdPenyakit().equals(c_FK_idGejala.get(i))) {
+                    if (temp.getIdPenyakit().equals(FK_idGejalaList.get(i))) {
 //                        if(i>0 && this.tempPenyakit.)
                         this.tempPenyakit.add(temp);
                     }
@@ -380,36 +387,45 @@ public class Controller {
 
         return saranPertamaByIdPenyakit;
     }
+
+    //
 //
-//
-//    public ArrayList<String> getKondisiByIdPenyakit(String idPenyakit) {
-//        ModelKondisiLingkungan temp;
-//        ArrayList<String> kondisiByIdPenyakit = new ArrayList<>();
-//        try {
-//            dbHelper.createDataBase();
-//        } catch (IOException ioe) {
-//            throw new Error("Unable to create database");
-//        }
-//        try {
-//            dbHelper.openDataBase();
-//        } catch (SQLException sqle) {
-//            throw sqle;
-//        }
-//        c_Penyakit = dbHelper.query("tabel_gejala", null, null, null, null, null, null);
-//        if (c_Penyakit.moveToFirst()) {
-//            do {
-//                temp = new ModelKondisiLingkungan(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3));
-//                if (temp.getFK_IdPenyakit().equals(idPenyakit)) {
-//                    gejalaByIdPenyakit.add(temp.getTextGejala());
-//                }
-//            } while (c_Penyakit.moveToNext());
-//
-//            return null;
-//        }
+    private ArrayList<String> getKondisiByIdPenyakit(String idPenyakit) {
+        ModelKondisiLingkungan temp;
+        ArrayList<String> kondisiByIdPenyakit = new ArrayList<>();
+        try {
+            dbHelper.createDataBase();
+        } catch (IOException ioe) {
+            throw new Error("Unable to create database");
+        }
+        try {
+            dbHelper.openDataBase();
+        } catch (SQLException sqle) {
+            throw sqle;
+        }
+        c_Penyakit = dbHelper.query("tabel_kondisilingkungan", null, null, null, null, null, null);
+        if (c_Penyakit.moveToFirst()) {
+            do {
+                temp = new ModelKondisiLingkungan(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3));
+                if (temp.getFK_idPenyakit().equals(idPenyakit)) {
+//                        if(i>0 && this.tempPenyakit.)
+                    kondisiByIdPenyakit.add(temp.getTextKondisiLingkungan());
+                }
+//                    this.tempPenyakit.add(new ModelPenyakit(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3)));
+//                    Toast.makeText(context, "Nama Penyakit: " + c_Penyakit.getString(3), Toast.LENGTH_SHORT).show();//Untuk mengecek
+            } while (c_Penyakit.moveToNext());
+        }
+
+        return kondisiByIdPenyakit;
+    }
 
 
     public ArrayList<String> getSaranPencegahanByIdPenyakit() {
         return saranPencegahanByIdPenyakit;
+    }
+
+    public ArrayList<String> getKondisiByIdPenyakit() {
+        return kondisiByIdPenyakit;
     }
 
     public ArrayList<String> getSaranPertamaByIdPenyakit() {

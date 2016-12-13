@@ -82,14 +82,14 @@ public class cardViewDiagnosa extends ActionBarActivity {
 //                if(modelPenyakitArrayList.get(position).isSelected()) {
 //                showMessage("Hasil Diagnosa anda", "Isi: " + modelPenyakitArrayList.get(position).getDeskripsiPenyakit());
 //                }
-//    kalo mau nambah intent bisa disini
-
 
                 ///// testing
                 Bundle bundle = new Bundle();
-                ArrayList<String> gejalaByIdPenyakit = new ArrayList<String>();
+                ArrayList<String> gejalaByIdPenyakit;
+                ArrayList<String> kondisiByIdPenyakit;
                 controller = new Controller(cardViewDiagnosa.this, modelPenyakitArrayList.get(position).getIdPenyakit());
                 gejalaByIdPenyakit = controller.getGejalaByIdPenyakit();
+                kondisiByIdPenyakit = controller.getKondisiByIdPenyakit();
 
                 bundle.putString("namaPenyakit", modelPenyakitArrayList.get(position).getNamaPenyakit());
                 bundle.putString("IdPenyakitInfo", modelPenyakitArrayList.get(position).getIdPenyakit());
@@ -97,6 +97,11 @@ public class cardViewDiagnosa extends ActionBarActivity {
                 for (int i = 0; i < gejalaByIdPenyakit.size(); i++) {
                     bundle.putString("gejalake" + i, gejalaByIdPenyakit.get(i));
                 }
+                bundle.putInt("jumlahKondisiInfo", kondisiByIdPenyakit.size());
+                for (int i = 0; i < kondisiByIdPenyakit.size(); i++) {
+                    bundle.putString("kondisike" + i, kondisiByIdPenyakit.get(i));
+                }
+
                 bundle.putString("deskripsiPenyakit", modelPenyakitArrayList.get(position).getDeskripsiPenyakit());
 
                 Intent i_infoPenyakit = new Intent(cardViewDiagnosa.this, InfoPenyakit.class);

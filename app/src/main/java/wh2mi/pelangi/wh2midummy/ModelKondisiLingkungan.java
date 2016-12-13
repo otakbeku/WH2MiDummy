@@ -5,7 +5,7 @@ package wh2mi.pelangi.wh2midummy;
  */
 
 public class ModelKondisiLingkungan {
-    private String idKondisiLingkungan, FK_idGejala, ketKondisiLingkungan, TextKondisiLingkungan;
+    private String idKondisiLingkungan, FK_idPenyakit , ketKondisiLingkungan, TextKondisiLingkungan;
     private boolean selected = false;
 
 
@@ -13,30 +13,30 @@ public class ModelKondisiLingkungan {
     //Constructor
     ///////////////////////////////////////////////////////////////////////////////////////////
 
-    public ModelKondisiLingkungan(String idKondisiLingkungan, String FK_idGejala, String ketKondisiLingkungan) {
+    public ModelKondisiLingkungan(String idKondisiLingkungan, String FK_idPenyakit , String ketKondisiLingkungan) {
         this.idKondisiLingkungan = idKondisiLingkungan;
-        this.FK_idGejala = FK_idGejala;
+        this.FK_idPenyakit = FK_idPenyakit ;
         this.ketKondisiLingkungan = ketKondisiLingkungan;
     }
 
-    public ModelKondisiLingkungan(String idKondisiLingkungan, String FK_idGejala, String ketKondisiLingkungan, String textKondisiLingkungan) {
+    public ModelKondisiLingkungan(String idKondisiLingkungan, String FK_idPenyakit , String ketKondisiLingkungan, String textKondisiLingkungan) {
         this.TextKondisiLingkungan = textKondisiLingkungan;
         this.idKondisiLingkungan = idKondisiLingkungan;
-        this.FK_idGejala = FK_idGejala;
+        this.FK_idPenyakit  = FK_idPenyakit ;
         this.ketKondisiLingkungan = ketKondisiLingkungan;
     }
 
 
-    public ModelKondisiLingkungan(String idKondisiLingkungan, String ketKondisiLingkungan, String FK_idGejala, boolean selected) {
+    public ModelKondisiLingkungan(String idKondisiLingkungan, String ketKondisiLingkungan, String FK_idPenyakit , boolean selected) {
         this.idKondisiLingkungan = idKondisiLingkungan;
         this.ketKondisiLingkungan = ketKondisiLingkungan;
-        this.FK_idGejala = FK_idGejala;
+        this.FK_idPenyakit  = FK_idPenyakit ;
         this.selected = selected;
     }
 
-    public ModelKondisiLingkungan(String idKondisiLingkungan, String FK_idGejala, String ketKondisiLingkungan, String textKondisiLingkungan, boolean selected) {
+    public ModelKondisiLingkungan(String idKondisiLingkungan, String FK_idPenyakit , String ketKondisiLingkungan, String textKondisiLingkungan, boolean selected) {
         this.idKondisiLingkungan = idKondisiLingkungan;
-        this.FK_idGejala = FK_idGejala;
+        this.FK_idPenyakit  = FK_idPenyakit ;
         this.ketKondisiLingkungan = ketKondisiLingkungan;
         TextKondisiLingkungan = textKondisiLingkungan;
         this.selected = selected;
@@ -54,12 +54,12 @@ public class ModelKondisiLingkungan {
         this.idKondisiLingkungan = idKondisiLingkungan;
     }
 
-    public String getFK_idGejala() {
-        return FK_idGejala;
+    public String getFK_idPenyakit () {
+        return FK_idPenyakit;
     }
 
-    public void setFK_idGejala(String FK_idGejala) {
-        this.FK_idGejala = FK_idGejala;
+    public void setFK_idPenyakit (String FK_idPenyakit ) {
+        this.FK_idPenyakit  = FK_idPenyakit ;
     }
 
     public String getKetKondisiLingkungan() {

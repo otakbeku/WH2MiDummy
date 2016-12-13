@@ -1,14 +1,25 @@
 package wh2mi.pelangi.wh2midummy;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class InfoPenyakit extends AppCompatActivity {
     Button btnSaranPencegahan, btnSaranPP;
     TextView txtNamaPenyakit, txtListGejala, txtListKondisi, txtDeskripsi;
+    String idPenyakit;
+    Controller controller;
+    ArrayList<String> saranPertamaByIdPenyakit, saranPencegahanByIdPenyakit;
+    StringBuffer bufferGejala,
+            bufferKondisi, bufferSaranPencegahanByIdPenyakit,
+            bufferSaranPertamaByIdPenyakit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +38,69 @@ public class InfoPenyakit extends AppCompatActivity {
 
         ///GET BUNDLE
         Bundle bundle = getIntent().getExtras();
+        idPenyakit = bundle.getString("IdPenyakitInfo");
         txtNamaPenyakit.setText(bundle.getString("namaPenyakit"));
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("Gejala yang terjadi adalah: ");
+
+        controller = new Controller(this, idPenyakit);
+        saranPertamaByIdPenyakit = controller.getSaranPertamaByIdPenyakit();
+        saranPencegahanByIdPenyakit = controller.getSaranPencegahanByIdPenyakit();
+
+        //STRINGBUFFER
+        bufferGejala = new StringBuffer();
+        bufferKondisi = new StringBuffer();
+        bufferSaranPencegahanByIdPenyakit = new StringBuffer();
+        bufferSaranPertamaByIdPenyakit = new StringBuffer();
+
+        bufferGejala.append("Gejala yang terjadi adalah: ");
+        bufferKondisi.append("Kondisi yang mungkin mempengaruhi: ");
         int jumlahGejala = bundle.getInt("jumlahGejalaInfo");
+        int jumlahKondisi = bundle.getInt("jumlahKondisiInfo");
         Log.i("jumlahGejalaInfo", Integer.toString(jumlahGejala));
         for (int i = 0; i < jumlahGejala; i++) {
-            buffer.append("\n" + (i + 1) + ". " + bundle.getString("gejalake" + i));
+            bufferGejala.append("\n" + (i + 1) + ". " + bundle.getString("gejalake" + i));
         }
-        txtListGejala.setText(buffer.toString());
+        for (int i = 0; i < jumlahKondisi; i++) {
+            bufferKondisi.append("\n" + (i + 1) + ". " + bundle.getString("kondisike" + i));
+        }
+        for (int i = 0; i < saranPencegahanByIdPenyakit.size(); i++) {
+            bufferSaranPencegahanByIdPenyakit.append( saranPencegahanByIdPenyakit.get(i));
+        }
+        for (int i = 0; i < saranPertamaByIdPenyakit.size(); i++) {
+            bufferSaranPertamaByIdPenyakit.append(saranPertamaByIdPenyakit.get(i));
+        }
+        txtListGejala.setText(bufferGejala.toString());
+        txtListKondisi.setText(bufferKondisi.toString());
         txtDeskripsi.setText(bundle.getString("deskripsiPenyakit"));
+
+        //BUTTON
+        btnSaranPencegahan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMessage("Saran Pencegahan", bufferSaranPencegahanByIdPenyakit.toString());
+            }
+        });
+
+        btnSaranPP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMessage("Saran Penanganan Pertama", bufferSaranPertamaByIdPenyakit.toString());
+            }
+        });
     }
+
+    public void showMessage(String judul, String pesan) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(judul);
+        builder.setMessage(pesan);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //OCDENYA DISINI NANTI
+            }
+        });
+        builder.show();
+    }
+
+
 }
