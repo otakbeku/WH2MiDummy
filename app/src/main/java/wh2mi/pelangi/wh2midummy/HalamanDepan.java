@@ -23,7 +23,7 @@ public class HalamanDepan extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.halamandepan);
+        setContentView(R.layout.inputumurjeniskelamin);
 
 
         //bagian untuk fetching database
@@ -60,8 +60,14 @@ public class HalamanDepan extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (inputUmur.getText().toString() != null && (rbLaki.isChecked() || rbPerempuan.isChecked())) {
-                    Intent i_InputGejala = new Intent(HalamanDepan.this, InputGejala.class);
-                    startActivity(i_InputGejala);
+                    if (Integer.parseInt(inputUmur.getText().toString()) > 15) {
+                        Intent i_InputGejala = new Intent(HalamanDepan.this, InputGejala.class);
+                        startActivity(i_InputGejala);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Anda Terlalu muda", Toast.LENGTH_SHORT).show();
+
+                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Anda Harus memilih dahulu sebelum bisa melanjutkan", Toast.LENGTH_SHORT).show();
 

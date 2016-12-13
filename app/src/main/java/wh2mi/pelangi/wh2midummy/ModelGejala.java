@@ -5,7 +5,7 @@ package wh2mi.pelangi.wh2midummy;
  */
 
 public class ModelGejala {
-    private String idGejala, FK_IdGejala, textGejala, ketGejala;
+    private String idGejala, FK_IdPenyakit, textGejala, ketGejala;
     private boolean selected = false;
 
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -14,31 +14,31 @@ public class ModelGejala {
     public ModelGejala() {
     }
 
-    public ModelGejala(String idGejala, String FK_IdGejala, String textGejala) {
+    public ModelGejala(String idGejala, String FK_IdPenyakit, String textGejala) {
         this.idGejala = idGejala;
-        this.FK_IdGejala = FK_IdGejala;
+        this.FK_IdPenyakit = FK_IdPenyakit;
         this.textGejala = textGejala;
     }
 
-    public ModelGejala(String idGejala, String FK_IdGejala, String textGejala, String ketGejala) {
+    public ModelGejala(String idGejala, String FK_IdPenyakit, String textGejala, String ketGejala) {
 
         this.idGejala = idGejala;
-        this.FK_IdGejala = FK_IdGejala;
+        this.FK_IdPenyakit = FK_IdPenyakit;
         this.textGejala = textGejala;
         this.ketGejala = ketGejala;
     }
 
 
-    public ModelGejala(String idGejala, String textGejala, String FK_IdGejala, boolean selected) {
+    public ModelGejala(String idGejala, String textGejala, String FK_IdPenyakit, boolean selected) {
         this.idGejala = idGejala;
         this.textGejala = textGejala;
-        this.FK_IdGejala = FK_IdGejala;
+        this.FK_IdPenyakit = FK_IdPenyakit;
         this.selected = selected;
     }
 
-    public ModelGejala(String idGejala, String FK_IdGejala, String textGejala, String ketGejala, boolean selected) {
+    public ModelGejala(String idGejala, String FK_IdPenyakit, String textGejala, String ketGejala, boolean selected) {
         this.idGejala = idGejala;
-        this.FK_IdGejala = FK_IdGejala;
+        this.FK_IdPenyakit = FK_IdPenyakit;
         this.textGejala = textGejala;
         this.ketGejala = ketGejala;
         this.selected = selected;
@@ -56,13 +56,13 @@ public class ModelGejala {
     }
 
 
-    public String getFK_IdGejala() {
+    public String getFK_IdPenyakit() {
 
-        return FK_IdGejala;
+        return FK_IdPenyakit;
     }
 
-    public void setFK_IdGejala(String FK_IdGejala) {
-        this.FK_IdGejala = FK_IdGejala;
+    public void setFK_IdPenyakit(String FK_IdPenyakit) {
+        this.FK_IdPenyakit = FK_IdPenyakit;
     }
 
     public String getTextGejala() {

@@ -19,7 +19,7 @@ import java.io.OutputStream;
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     String DB_PATH = null;
-    private static String DB_NAME = "dummyDB.db";
+    private static String DB_NAME = "DBcek.db";
     private SQLiteDatabase myDB;
     private final Context context;
 

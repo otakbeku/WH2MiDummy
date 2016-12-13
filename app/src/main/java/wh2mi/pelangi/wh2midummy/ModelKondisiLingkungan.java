@@ -19,8 +19,8 @@ public class ModelKondisiLingkungan {
         this.ketKondisiLingkungan = ketKondisiLingkungan;
     }
 
-    public ModelKondisiLingkungan(String textKondisiLingkungan, String idKondisiLingkungan, String FK_idGejala, String ketKondisiLingkungan) {
-        TextKondisiLingkungan = textKondisiLingkungan;
+    public ModelKondisiLingkungan(String idKondisiLingkungan, String FK_idGejala, String ketKondisiLingkungan, String textKondisiLingkungan) {
+        this.TextKondisiLingkungan = textKondisiLingkungan;
         this.idKondisiLingkungan = idKondisiLingkungan;
         this.FK_idGejala = FK_idGejala;
         this.ketKondisiLingkungan = ketKondisiLingkungan;
