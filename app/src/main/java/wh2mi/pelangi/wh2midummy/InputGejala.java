@@ -5,17 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
+import android.support.v7.app.AlertDialog;
 
 import java.util.ArrayList;
 
@@ -32,11 +34,23 @@ public class InputGejala extends Activity {
     CustomAdapterGejala adapterGejala;
     Controller controller;
 
+    ArrayList<ModelGejala> gejalaSelected;
+//    ArrayList<String> gejalaSelected;
+
+//    ParseGejala p;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inputgejala);
+
+        // Tambahan
+//        p = new ParseGejala();
+//        p.put();
+
+        gejalaSelected = new ArrayList<ModelGejala>();
+
 
         //TAMBAHAN GEJALA
         controller = new Controller(InputGejala.this);
@@ -45,12 +59,37 @@ public class InputGejala extends Activity {
         //Instansiasi Button
         btn_inputKondisi = (Button) findViewById(R.id.btn_inputKondisi);
 
-        //Intent untuk ke halaman input gejala
+        //Intent untuk ke halaman input kondisi
         btn_inputKondisi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ////////////////////////////
+                ArrayList<ModelGejala> gejalaList = adapterGejala.gejalaList;
+                for (int i = 0; i < gejalaList.size(); i++) {
+                    ModelGejala modelGejala = gejalaList.get(i);
+                    if (modelGejala.isSelected()) {
+                        gejalaSelected.add(modelGejala);
+                    }
+                }
+                ////////////////////////////
+
+
                 Intent i_inputKondisi = new Intent(InputGejala.this, InputKondisiLingkungan.class);
-                startActivity(i_inputKondisi);
+                Bundle bundle = new Bundle();
+                if (getSelectedGejala() != null) {
+                    int jumlahGejala = getSelectedGejala().size();
+                    bundle.putInt("jumlahGejala", jumlahGejala);
+                    for (int i = 0; i < jumlahGejala; i++) {
+                        bundle.putString("idGejala-" + i, getSelectedGejala().get(i).getIdGejala());
+                        Log.i("idGejala: ", getSelectedGejala().get(i).getIdGejala());
+                    }
+                    if (bundle != null) {
+                        i_inputKondisi.putExtras(bundle);
+                        startActivity(i_inputKondisi);
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Anda belum memilih gejala", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -58,46 +97,6 @@ public class InputGejala extends Activity {
         //SUDAH BISA
         displayGejalaListView();
         checkButtonClick();
-
-        //CONTOH
-        //        controller.getAllGejala(InputGejala.this);
-//        String[] GejalaBaru = controller.getAllGejalaToString(InputGejala.this);//ini ga perlu lagi
-
-//        boolean cek = false;
-
-//        if (GejalaBaru != null) {
-//            cek = true;
-//            Toast.makeText(getApplicationContext(), "Posisi " + cek, Toast.LENGTH_SHORT).show();
-//        }
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//        String[] Gejala = new String[]{
-//                "Pusing", "muntah", "memar", "gatal", "sakit sendi", "Pusing", "muntah", "memar",
-//                "gatal", "sakit sendi", "Pusing", "muntah", "memar", "gatal", "sakit sendi",
-//                "Pusing", "muntah", "memar", "gatal", "sakit sendi", "Pusing", "muntah", "memar",
-//                "gatal", "sakit sendi", "Pusing", "muntah", "memar", "gatal", "sakit sendi"
-//        };
-//
-//        //Instansiai listView
-//        listGejala = (ListView) findViewById(R.id.listGejala);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, GejalaBaru);
-//
-//        listGejala.setAdapter(adapter);
-//
-//        //Buat nge-Toast doang
-//        listGejala.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                int itemPosition = position;
-//
-//                String itemValue = (String) listGejala.getItemAtPosition(position);
-//
-//                Toast.makeText(getApplicationContext(), "Posisi " + itemPosition + " value: " + itemValue, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     }
 
@@ -116,8 +115,9 @@ public class InputGejala extends Activity {
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ModelGejala modelGejala = (ModelGejala) adapterView.getItemAtPosition(i);
-                Toast.makeText(getApplicationContext(), "Memilih: " + modelGejala.getKetGejala(), Toast.LENGTH_SHORT).show();
+                Log.i("POSISI", Integer.toString(i));
+//                ModelGejala modelGejala = (ModelGejala) adapterView.getItemAtPosition(i);
+//                Toast.makeText(getApplicationContext(), "Memilih: " + modelGejala.getKetGejala(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -174,11 +174,11 @@ public class InputGejala extends Activity {
                     public void onClick(View view) {
                         CheckBox cbxGejala = (CheckBox) view;
                         ModelGejala modelGejala = (ModelGejala) cbxGejala.getTag();
+                        modelGejala.setSelected(cbxGejala.isChecked());
 
                         //Test dengan toast
-                        Toast.makeText(getApplicationContext(), "User memilih: " + cbxGejala.getText()
-                                + " nilai: " + cbxGejala.isChecked(), Toast.LENGTH_SHORT).show();
-                        modelGejala.setSelected(cbxGejala.isChecked());
+//                        Toast.makeText(getApplicationContext(), "User memilih: " + cbxGejala.getText().toString()
+//                                + " nilai: " + cbxGejala.isChecked(), Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
@@ -187,9 +187,9 @@ public class InputGejala extends Activity {
 
             ModelGejala modelGejala = gejalaList.get(position);
 //            holder.namaGejala.setText(modelGejala.getKetGejala());//lebih baik di ganti dengan ketGejala, soalnya nambah ribet kalo di tambah textview
-            holder.namaGejala.setText("");
+            holder.namaGejala.setText(modelGejala.getKetGejala());
 //            holder.checkboxGejala.setText("gejala"); // tidak perlu di pakai, yang digunakan hanya keterangan gejala
-            holder.checkboxGejala.setText(modelGejala.getKetGejala());
+            holder.checkboxGejala.setText("");
             holder.checkboxGejala.setChecked(modelGejala.isSelected());
             holder.checkboxGejala.setTag(modelGejala);
 
@@ -199,7 +199,8 @@ public class InputGejala extends Activity {
     }
 
     /**
-     * method untuk memastikan apa saja yang sudah dipilih oler user. Tinggal di panggil aja, tapi hanya khusus untuk kelas ini saja.
+     * method untuk memastikan apa saja yang sudah dipilih oler user. Tinggal di panggil aja,
+     * tapi hanya khusus untuk kelas ini saja.
      */
     private void checkButtonClick() {
         Button btn_cekInputGejala = (Button) findViewById(R.id.btn_cekInputgejala);
@@ -213,12 +214,40 @@ public class InputGejala extends Activity {
                 for (int i = 0; i < gejalaList.size(); i++) {
                     ModelGejala modelGejala = gejalaList.get(i);
                     if (modelGejala.isSelected()) {
-                        responText.append("\n-> " + modelGejala.getKetGejala());
+                        responText.append("\n-> " + modelGejala.getKetGejala() + " idPenyakit: " + modelGejala.getFK_IdPenyakit());
+//                        gejalaSelected.get(i).setIdGejala(modelGejala.getIdGejala());
+//                        gejalaSelected.add(modelGejala.getIdGejala());
+                        gejalaSelected.add(modelGejala);
                     }
 
                 }
-                Toast.makeText(getApplicationContext(), responText, Toast.LENGTH_SHORT).show();
+                showMessage("Data yang dipilih", responText.toString());
+//                Toast.makeText(getApplicationContext(), responText, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private ArrayList<ModelGejala> getSelectedGejala() {
+        return gejalaSelected;
+
+    }
+
+    public void showMessage(String judul, String pesan) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(judul);
+        builder.setMessage(pesan);
+        builder.show();
+    }
+
+    //UNTUK NGOSONGIN ARRAYLST
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        Toast.makeText(getApplicationContext(), "onresume", Toast.LENGTH_SHORT).show();
+        //UNTUK NGOSONGIN
+        if (!gejalaSelected.isEmpty()) {
+            gejalaSelected.clear();
+        }
     }
 }
