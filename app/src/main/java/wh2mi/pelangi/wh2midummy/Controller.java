@@ -392,7 +392,7 @@ public class Controller {
         c_Penyakit = dbHelper.query("tabel_penyakit", null, null, null, null, null, null);
         if (c_Penyakit.moveToFirst()) {
             do {
-                temp = new ModelPenyakit(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3));
+                temp = new ModelPenyakit(c_Penyakit.getString(0), c_Penyakit.getString(1), c_Penyakit.getString(2), c_Penyakit.getString(3),c_Penyakit.getString(4));
                 if (temp.getIdPenyakit().equals(idPenyakit)) {
                     rujukan = temp.getRujukan();
                 }

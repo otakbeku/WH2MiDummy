@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class InputGejala extends Activity {
 
     private ListView listGejala;
-    private Button btn_inputKondisi;
+    private Button btnInputKondisi;
     CustomAdapterGejala adapterGejala;
     Controller controller;
 
@@ -43,10 +43,10 @@ public class InputGejala extends Activity {
         gejalaSelected = new ArrayList<ModelGejala>();
         controller = new Controller(InputGejala.this);
 
-        btn_inputKondisi = (Button) findViewById(R.id.btn_inputKondisi);
+        btnInputKondisi = (Button) findViewById(R.id.btn_inputKondisi);
 
         //Intent untuk ke halaman input kondisi
-        btn_inputKondisi.setOnClickListener(new View.OnClickListener() {
+        btnInputKondisi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ArrayList<ModelGejala> gejalaList = adapterGejala.gejalaList;

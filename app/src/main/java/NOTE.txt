@@ -1,0 +1,209 @@
+// CATATAN PENTING
+Untuk mengirimkan data atau saat passing, ada banyaknya merubah object yang dikirimkan.
+Object dirubah menjadi byte.
+Contoh syntax untuk merubah object menjadi byte:
+
+package com.example;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+public class Serializer {
+
+     // Untuk merubah object menjadi byteArray
+    public static byte[] serialize(Object obj) throws IOException {
+        try(ByteArrayOutputStream b = new ByteArrayOutputStream()){
+            try(ObjectOutputStream o = new ObjectOutputStream(b)){
+                o.writeObject(obj);
+            }
+            return b.toByteArray();
+        }
+    }
+
+    //Method deserialize yang mengubah dari byteArray ke object kembali
+    public static Object deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
+        try(ByteArrayInputStream b = new ByteArrayInputStream(bytes)){
+            try(ObjectInputStream o = new ObjectInputStream(b)){
+                return o.readObject();
+            }
+        }
+    }
+
+}
+
+
+Contoh lain:
+1. Untuk dikirim:
+ByteArrayOutputStream bos = new ByteArrayOutputStream();
+ObjectOutput out = null;
+try {
+  out = new ObjectOutputStream(bos);
+  out.writeObject(yourObject);
+  out.flush();
+  byte[] yourBytes = bos.toByteArray();
+  ...
+} finally {
+  try {
+    bos.close();
+  } catch (IOException ex) {
+    // ignore close exception
+  }
+}
+
+2. Saat diterima/dirubah kembali:
+ByteArrayInputStream bis = new ByteArrayInputStream(yourBytes);
+ObjectInput in = null;
+try {
+  in = new ObjectInputStream(bis);
+  Object o = in.readObject();
+  ...
+} finally {
+  try {
+    if (in != null) {
+      in.close();
+    }
+  } catch (IOException ex) {
+    // ignore close exception
+  }
+}
+
+//////////////////////////////////////////////////////////////////
+Java Object to Byte Array and Back
+//////////////////////////////////////////////////////////////////
+diatur di Depedencynya:
+<dependency>
+	<groupId>commons-lang</groupId>
+	<artifactId>commons-lang</artifactId>
+	<version>2.6</version>
+</dependency>
+
+Yang diimport: import org.apache.commons.lang.SerializationUtils;
+
+JAVA:
+/**
+* Convert object to byte array
+* @param object
+* @return
+*/
+public static byte[] fromJavaToByteArray(Serializable object) {
+	return SerializationUtils.serialize(object);
+}
+
+/**
+* Convert byte array to object
+* @param bytes
+* @return
+*/
+public static Object fromByteArrayToJava(byte[] bytes) {
+	return SerializationUtils.deserialize(bytes);
+}
+
+//////////////////////////////////////////////////////////////////
+Java Object to JSON and Back
+//////////////////////////////////////////////////////////////////
+diatur di Dependencynya:
+<dependency>
+	<groupId>org.codehaus.jackson</groupId>
+	<artifactId>jackson-mapper-asl</artifactId>
+	<version>1.9.12</version>
+</dependency>
+
+JAVA:
+/**
+* Convert object to JSON String
+* @param object
+* @return
+* @throws JsonGenerationException
+* @throws JsonMappingException
+* @throws IOException
+*/
+public static String fromJavaToJson(Serializable object)
+	throws JsonGenerationException, JsonMappingException, IOException {
+    ObjectMapper jsonMapper = new ObjectMapper();
+    return jsonMapper.writeValueAsString(object);
+}
+
+/**
+* Convert a JSON string to an object
+* @param json
+* @return
+* @throws JsonParseException
+* @throws JsonMappingException
+* @throws IOException
+*/
+public static Object fromJsonToJava(String json, Class type) throws JsonParseException,
+		JsonMappingException, IOException {
+     ObjectMapper jsonMapper = new ObjectMapper();
+     return jsonMapper.readValue(json, type);
+}
+//////////////////////////////////////////////////////////////////
+Java Object to XML and Back
+//////////////////////////////////////////////////////////////////
+diatur di Dependencynya:
+<dependency>
+	<groupId>com.thoughtworks.xstream</groupId>
+	<artifactId>xstream</artifactId>
+	<version>1.4.4</version>
+</dependency>
+
+JAVA:
+/**
+* Convert a java object to XML
+* @param object
+* @return
+*/
+public static String fromJavaToXML(Serializable object) {
+	XStream xs = new XStream();
+	return xs.toXML(object);
+}
+
+/**
+* Convert from XML to object
+* @param xml
+* @return
+*/
+public static Object fromXMLToJava(String xml){
+	XStream xs = new XStream();
+	return xs.fromXML(xml);
+}
+
+//////////////////////////////////////////////////////////////////
+BACAAN UNTUK JSON
+//////////////////////////////////////////////////////////////////
+STRUCTURE JSON :
+http://www.json.org/json-id.html
+http://www.candra.web.id/penjelasan-struktur-data-json/
+http://www.proweb.co.id/articles/web_application/mengenal_format_json.html
+https://en.wikipedia.org/wiki/JSON
+
+CONTOH:
+http://json.org/example.html
+
+IMPLEMENTASI PADA SQLITE:
+https://dzone.com/articles/storing-objects-android
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
